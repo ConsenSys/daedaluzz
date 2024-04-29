@@ -12,9 +12,9 @@ docker pull ghcr.io/foundry-rs/foundry@sha256:e3ba202249cccdffafc0d0e90c43baca8f
 docker pull ghcr.io/crytic/echidna/echidna:v2.0.4
 docker pull fuzzland/ityfuzz:v0.0.1
 docker build --rm -t "hybrid-echidna:v0.0.2" -f Dockerfile.optik .
-# rm -rf optic-tmp
-# git clone https://github.com/crytic/optik.git optic-tmp
-# cd optic-tmp
+# rm -rf optik-tmp
+# git clone https://github.com/crytic/optik.git optik-tmp
+# cd optik-tmp
 # git checkout v0.0.2
 # git apply ../optik-dockerfile.patch
 # docker build --rm -t "hybrid-echidna:v0.0.2" -f Dockerfile .
