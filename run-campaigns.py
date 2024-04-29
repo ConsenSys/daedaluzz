@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from json import dumps, loads
-import subprocess
+from subprocess import Popen, TimeoutExpired
 import re
 import time
 import tempfile
@@ -198,7 +198,7 @@ def process_all_tasks(tasks):
                     in_file.write(fuzzer_input)
                     in_file.flush()
                     in_file.seek(0)
-                    proc = subprocess.Popen(
+                    proc = Popen(
                         exe,
                         stdin=in_file,
                         stdout=out_file,
@@ -211,7 +211,7 @@ def process_all_tasks(tasks):
                     or fuzzer_name == "hybrid-echidna"
                     or fuzzer_name == "ityfuzz"
                 ):
-                    proc = subprocess.Popen(
+                    proc = Popen(
                         " ".join(exe),
                         stdout=out_file,
                         stderr=out_file,
