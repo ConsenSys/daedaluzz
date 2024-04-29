@@ -4,6 +4,7 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 np.seterr(invalid="ignore")
 
@@ -29,6 +30,7 @@ def aggregate_fuzzer_data(fuzzers):
                 if fuzzer.startswith(tool):
                     tool = fuzzer
                 violations = res["violations"]
+
                 # We aggregate the bug discovery time.
                 for bug_id, bug_discovery_time in violations.items():
                     if not (tool in discovery_time):
@@ -39,6 +41,7 @@ def aggregate_fuzzer_data(fuzzers):
                         per_tool_disc_time[glob_bug_id] = []
                     per_bug_disc_time = per_tool_disc_time[glob_bug_id]
                     per_bug_disc_time.append(bug_discovery_time)
+
                 # We aggregate the number of total bugs.
                 num_bugs = len(violations)
                 if not (tool in total_bugs):
@@ -48,6 +51,7 @@ def aggregate_fuzzer_data(fuzzers):
                 if not (seed in bugs_per_tool):
                     bugs_per_tool[seed] = 0
                 bugs_per_tool[seed] += num_bugs
+
                 # We aggregate the campaign duration.
                 duration = res["duration"]
                 if not (tool in total_duration):
@@ -114,7 +118,7 @@ def create_bar_chart(total_bugs, time_limit):
     plt.savefig(f"{file_name}.png", dpi=300)
 
 
-time_limit = 28800
+time_limit = int(os.environ.get("TIME_LIMIT", 28800))
 create_bar_chart(total_bugs, time_limit)
 
 
